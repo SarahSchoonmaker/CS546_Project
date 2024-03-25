@@ -1,0 +1,61 @@
+const tripObj = {
+    _id: '65ee9dff5140d127ae8230a2', 
+    postTitle: 'Weekend trip to the shore with my pup', 
+    userId: '65aa9dff5140d127ae8230c3',
+    datePosted: '03/06/2024',
+    startLocation: {
+        town: 'New York City',
+        state: "NY"
+    },
+    endLocation: {
+        town: 'Tinton Falls',
+        state: "NJ"
+    },
+    locationList: ['12ee9dff5140d127ae8230a3','34ee9dff5140d127ae8230a5'],
+    description: 'I stoped at the rest stop on I-95 to grab some snacks, they had a fountain for my pup to drink at. I also got starbucks near the shore, they served a nice puppuccino for my pup.',
+    photoList:[{name:'my pup',url: `imageURL` }], // imageURL to be generated using URL.createObjectURL(imageFile)
+    rating:{upvote: 5, downvote: 3},
+    comments:['12ab9dff5140d127ae8230a2']
+}
+
+const locationObj = {
+    _id: '22ab9dcc5140d127ae8230a2', 
+    name: 'Starbucks at Jersey Shore',
+    address:{
+        streetInfo: '1 Premium Outlets Blvd',
+        town: 'Tinton Falls',
+        state: 'NJ',
+        zip: '07753',
+    },
+    locationType: 'Restaurant',   // Restaurant, Gas Stations, Rest Stops...
+    rating:{BathroomRating:[{userId:'33ab9dfg5140d127ae8230x2', bRating: 4}], Overall:[{userId:'33ab9dfg5140d127ae8230x2',oRating:4}]}       //1~5 toilets/paws
+}
+
+const user = {
+    _id: '33ab9dfg5140d127ae8230x2',
+    firstName: 'Yensang',
+    lastName: 'Wen',
+    username: 'yw90',
+    email: 'yw90@stevens.edu',
+    hashedPW: '$2a$08$XdvNkfdNIL8F8xsuIUeSbNOF',
+    address:{
+        streetInfo: '123 Pup Blvd',
+        town: 'Pupton',
+        state: 'NJ',
+        zip: '08080',
+    },
+    avatar: Image,   // api/image upload
+    favorites: ['89zz9dff5140d127ae8230a2'],
+    votes: {up:['89zz9dff5140d127ae8230a2'], down:['54ee9dff5140d127ae8230a3']},
+    trips:['65ee9dff5140d127ae8230a2'],
+    ratings:['22ab9dcc5140d127ae8230a2'],
+    commented:['89zz9dff5140d127ae8230a2']
+}
+
+const commentObj = {
+    _id: '81zz9adc4140d127ae8230a8',
+    tripId: '65ee9dff5140d127ae8230a2',
+    poster: '33ab9dfg5140d127ae8230x2',
+    datePosted: '03/11/2024',
+    comment: 'This trip is exactly the one I would like to go on in 2 weeks.',
+}//
