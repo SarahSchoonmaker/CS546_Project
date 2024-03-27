@@ -1,10 +1,9 @@
 import express from 'express';
-import { ObjectId } from 'mongodb';
-import { trips } from '../config/mongoCollections';
+import { create, getAll, get, remove, update } from '../data/trips.js';
 
 const router = express.Router();
 
-// Create a new trip
+// Route for creating a new trip
 router.post('/', async (req, res) => {
     try {
         const {
@@ -19,7 +18,7 @@ router.post('/', async (req, res) => {
         } = req.body;
 
         // Call create function from data module
-        const newTrip = await exportedMethods.create(
+        const newTrip = await create(
             postTitle,
             userId,
             startLocation,
@@ -36,23 +35,23 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Get all trips
+// Route for getting all trips
 router.get('/', async (req, res) => {
     try {
         // Call getAll function from data module
-        const allTrips = await exportedMethods.getAll();
+        const allTrips = await getAll();
         res.json(allTrips);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-// Get a trip by ID
+// Route for getting a trip by ID
 router.get('/:tripId', async (req, res) => {
     try {
         const tripId = req.params.tripId;
         // Call get function from data module
-        const trip = await exportedMethods.get(tripId);
+        const trip = await get(tripId);
         if (!trip) {
             res.status(404).json({ error: 'Trip not found' });
         } else {
@@ -63,7 +62,7 @@ router.get('/:tripId', async (req, res) => {
     }
 });
 
-// Update a trip by ID
+// Route for updating a trip by ID
 router.put('/:tripId', async (req, res) => {
     try {
         const tripId = req.params.tripId;
@@ -79,7 +78,7 @@ router.put('/:tripId', async (req, res) => {
         } = req.body;
 
         // Call update function from data module
-        const updatedTrip = await exportedMethods.update(
+        const updatedTrip = await update(
             tripId,
             postTitle,
             userId,
@@ -97,17 +96,16 @@ router.put('/:tripId', async (req, res) => {
     }
 });
 
-// Delete a trip by ID
+// Route for deleting a trip by ID
 router.delete('/:tripId', async (req, res) => {
     try {
         const tripId = req.params.tripId;
         // Call remove function from data module
-        const deletedTrip = await exportedMethods.remove(tripId);
+        const deletedTrip = await remove(tripId);
         res.json(deletedTrip);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
-
 
 export default router;
