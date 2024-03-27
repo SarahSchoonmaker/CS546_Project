@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trips List</title>
-    <!-- Add any necessary stylesheets or scripts -->
+    <link rel="stylesheet" href="/public/site.css"> 
 </head>
 <body>
     <h1>Trips List</h1>
     {{#each trips}}
     <div class="trip">
         <h2>{{postTitle}}</h2>
-        <p><strong>User ID:</strong> {{userid}}</p>
+        <p><strong>User ID:</strong> {{userId}}</p> 
         <p><strong>Date Posted:</strong> {{datePosted}}</p>
         <p><strong>Start Location:</strong> {{startLocation.town}}, {{startLocation.state}}</p>
         <p><strong>End Location:</strong> {{endLocation.town}}, {{endLocation.state}}</p>
         <p><strong>Description:</strong> {{description}}</p>
-        <!-- Add more trip details as needed -->
     </div>
     {{/each}}
 </body>
