@@ -1,126 +1,113 @@
-import { Router } from 'express';
-import { tripsData } from '../data/index.js';
+import express from 'express';
+import { ObjectId } from 'mongodb';
+import { trips } from '../config/mongoCollections';
 
-const router = Router();
+const router = express.Router();
 
-router
-  .route('/')
-  .get(async (req, res) => {
+// Create a new trip
+router.post('/', async (req, res) => {
     try {
-      // Retrieve all trips
-      const trips = await tripsData.getAll();
-      res.json(trips);
-    } catch (error) {
-      // Handle error
-      res.status(500).json({ error: error.message });
-    }
-  })
-  .post(async (req, res) => {
-    try {
-      // Extract trip data from request body
-      const {
-        postTitle,
-        userid,
-        datePosted,
-        startLocation,
-        endLocation,
-        locationList,
-        description,
-        photoList,
-        rating,
-        comments
-        // Include other trip properties here
-      } = req.body;
+        const {
+            postTitle,
+            userId,
+            startLocation,
+            endLocation,
+            locationList,
+            description,
+            photoList,
+            rating,
+        } = req.body;
 
-      // Add new trip
-      const trip = await tripsData.create(
-        postTitle,
-        userid,
-        datePosted,
-        startLocation,
-        endLocation,
-        locationList,
-        description,
-        photoList,
-        rating,
-        comments
-        // Include other trip properties here
-      );
-      res.json(trip);
-    } catch (error) {
-      // Handle error
-      res.status(400).json({ error: error.message });
-    }
-  });
+        // Call create function from data module
+        const newTrip = await exportedMethods.create(
+            postTitle,
+            userId,
+            startLocation,
+            endLocation,
+            locationList,
+            description,
+            photoList,
+            rating
+        );
 
-router
-  .route('/:tripId')
-  .get(async (req, res) => {
-    try {
-      // Retrieve trip by id
-      const trip = await tripsData.get(req.params.tripId);
-      if (!trip) {
-        res.status(404).json({ error: 'Trip not found' });
-      } else {
-        res.json(trip);
-      }
+        res.status(201).json(newTrip);
     } catch (error) {
-      // Handle error
-      res.status(500).json({ error: error.message });
+        res.status(400).json({ error: error.message });
     }
-  })
-  .delete(async (req, res) => {
-    try {
-      // Delete trip by id
-      const deletedTrip = await tripsData.remove(req.params.tripId);
-      if (deletedTrip) {
-        res.status(200).json({ _id: req.params.tripId, deleted: true });
-      } else {
-        res.status(404).json({ error: 'Trip not found' });
-      }
-    } catch (error) {
-      // Handle error
-      res.status(500).json({ error: error.message });
-    }
-  })
-  .put(async (req, res) => {
-    try {
-      // Extract trip data from request body
-      const {
-        postTitle,
-        userid,
-        datePosted,
-        startLocation,
-        endLocation,
-        locationList,
-        description,
-        photoList,
-        rating,
-        comments
-        // Include other trip properties here
-      } = req.body;
+});
 
-      // Update trip by id
-      const updatedTrip = await tripsData.update(
-        req.params.tripId,
-        postTitle,
-        userid,
-        datePosted,
-        startLocation,
-        endLocation,
-        locationList,
-        description,
-        photoList,
-        rating,
-        comments
-        // Include other trip properties here
-      );
-      res.json(updatedTrip);
+// Get all trips
+router.get('/', async (req, res) => {
+    try {
+        // Call getAll function from data module
+        const allTrips = await exportedMethods.getAll();
+        res.json(allTrips);
     } catch (error) {
-      // Handle error
-      res.status(400).json({ error: error.message });
+        res.status(500).json({ error: error.message });
     }
-  });
+});
 
-// Export the router
+// Get a trip by ID
+router.get('/:tripId', async (req, res) => {
+    try {
+        const tripId = req.params.tripId;
+        // Call get function from data module
+        const trip = await exportedMethods.get(tripId);
+        if (!trip) {
+            res.status(404).json({ error: 'Trip not found' });
+        } else {
+            res.json(trip);
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Update a trip by ID
+router.put('/:tripId', async (req, res) => {
+    try {
+        const tripId = req.params.tripId;
+        const {
+            postTitle,
+            userId,
+            startLocation,
+            endLocation,
+            locationList,
+            description,
+            photoList,
+            rating,
+        } = req.body;
+
+        // Call update function from data module
+        const updatedTrip = await exportedMethods.update(
+            tripId,
+            postTitle,
+            userId,
+            startLocation,
+            endLocation,
+            locationList,
+            description,
+            photoList,
+            rating
+        );
+
+        res.json(updatedTrip);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+// Delete a trip by ID
+router.delete('/:tripId', async (req, res) => {
+    try {
+        const tripId = req.params.tripId;
+        // Call remove function from data module
+        const deletedTrip = await exportedMethods.remove(tripId);
+        res.json(deletedTrip);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
 export default router;
