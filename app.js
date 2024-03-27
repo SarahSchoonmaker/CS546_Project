@@ -2,8 +2,13 @@
 import express from 'express';
 import exphbs from 'express-handlebars';
 import tripsRouter from './routes/trips.js';
+import bcrypt from 'bcryptjs'; // Import bcrypt
+
 
 const app = express();
+
+const bcrypt = require('bcryptjs')
+
 
 // Set Handlebars as the view engine
 app.engine('handlebars', exphbs());

@@ -1,3 +1,5 @@
+To run from dev branch, clone the repo and npm i, npm start. 
+
 **TITLE: Road Trip With Dog Stops**
 
 **GROUP MEMBERS:**

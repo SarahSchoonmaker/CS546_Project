@@ -1,0 +1,20 @@
+{
+    "dependencies": {
+        "axios": "^1.6.7",
+        "bcrypt": "^5.1.1",
+        "blueimp-md5": "^2.19.0",
+        "express": "^4.19.1",
+        "express-handlebars": "^7.1.2",
+        "mongodb": "^6.3.0"
+    },
+    "name": "cs-546-project",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "type": "module",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "author": "Nick, Yansong, Sarah, Adaugo",
+    "license": "ISC"
+}
